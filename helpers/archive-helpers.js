@@ -38,7 +38,7 @@ exports.readListOfUrls = function(callback) {
 
 exports.isUrlInList = function(url, callback) {
   
-  exports.readListOfUrls( (thing) => { return thing.includes(url); });
+  exports.readListOfUrls( (data) => { callback(data.includes(url)); } );
 
 };
 
