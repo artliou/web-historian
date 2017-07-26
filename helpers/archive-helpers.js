@@ -43,6 +43,10 @@ exports.isUrlInList = function(url, callback) {
 };
 
 exports.addUrlToList = function(url, callback) {
+  fs.appendFile(exports.paths.list, url, (err)=> {
+    if (err) { throw err; }
+    callback();
+  });
 };
 
 exports.isUrlArchived = function(url, callback) {
