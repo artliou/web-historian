@@ -11,6 +11,7 @@ var ip = '127.0.0.1';
 var server = http.createServer(handler.handleRequest);
 
 if (module.parent) {
+  console.log('module.parent branch. Wut');
   module.exports = server;
 } else {
   server.listen(port, ip);
