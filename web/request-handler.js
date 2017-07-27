@@ -5,10 +5,26 @@ var archive = require('../helpers/archive-helpers');
 
 exports.handleRequest = function (req, res) {
 
-  if (req.method === 'GET' && req.url === '/') {
-    res.end('/<input type="input" name="url">/');
-    return;
-  }
+  if (req.method === 'GET') {
+    if ( req.url === '/') {
+      res.end('/<input type="input" name="url">/');
 
-  res.end(archive.paths.list);
+    } else {
+      // For all but '/':
+      res.statusCode = 200;
+      res.writeHead(res.statusCode, archive.headers);
+      archive.readArchivedFile(req.url, (data) => {
+        res.end(data);
+      });
+    }
+  } else if (req.method === 'POST') {
+    var url = req.url.replace('/?', '');
+    archive.addUrlToList(url);
+    res.statusCode = 302;
+    res.writeHead(res.statusCode, archive.headers);
+    res.end();
+
+  } else {
+    res.end(archive.paths.list);
+  }
 };
