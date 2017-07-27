@@ -60,3 +60,13 @@ exports.isUrlArchived = function(url, callback) {
 
 exports.downloadUrls = function(urls) {
 };
+
+exports.readArchivedFile = function(url, callback) {
+  var path = exports.paths.archivedSites + url;
+  fs.readFile(path, 'utf8', (err, data) => {
+
+    if (err) { throw err; }
+
+    callback(data);
+  });
+};
