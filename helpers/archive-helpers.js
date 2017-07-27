@@ -53,7 +53,7 @@ exports.addUrlToList = function(url, callback) {
 };
 
 exports.isUrlArchived = function(url, callback) {
-  fs.exists(`${exports.paths.archivedSites}/${url}`, (exists) => {
+  fs.exists(exports.urlArchivePath(url), (exists) => {
     callback(exists);
   });
 };
@@ -63,15 +63,18 @@ exports.downloadUrls = function(urls, callback) {
 };
 
 exports.downloadUrl = function(url) {
+  //var file = fs.
 };
 
-
 exports.readArchivedFile = function(url, callback) {
-  var path = exports.paths.archivedSites + url;
-  fs.readFile(path, 'utf8', (err, data) => {
+  fs.readFile(exports.urlArchivePath(url), 'utf8', (err, data) => {
 
     if (err) { throw err; }
 
     callback(data);
   });
+};
+
+exports.urlArchivePath = function(url, callback) {
+  return `${exports.paths.archivedSites}/${url}`;
 };
