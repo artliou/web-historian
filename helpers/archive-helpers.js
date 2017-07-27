@@ -43,6 +43,9 @@ exports.isUrlInList = function(url, callback) {
 };
 
 exports.addUrlToList = function(url, callback) {
+  // Unsure if needed. Worried that if not cb provided, attempt to
+  // undefined() which is silly
+  if (! callback) { callback = function () {}; }
   fs.appendFile(exports.paths.list, url, (err)=> {
     if (err) { throw err; }
     callback();
