@@ -32,11 +32,16 @@ exports.handleRequest = function (req, res) {
     }
 
   } else if (req.method === 'POST') {
-    var url = req.url.replace('/?', '');
-    archive.addUrlToList(url, () => {
-      res.statusCode = 302;
-      res.writeHead(res.statusCode, archive.headers);
-      res.end();
+    //var url = req.url.replace('/?', '');
+    let tempUrl;
+    let body = '';
+    req.on('data', (chunk) => { req.url = chunk.toString().split('=')[1]; } );
+    req.on('end', () => {
+      archive.addUrlToList(req.url, () => {
+        res.statusCode = 302;
+        res.writeHead(res.statusCode, archive.headers);
+        res.end();
+      });
     });
 
   } else {
