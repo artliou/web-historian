@@ -6,6 +6,7 @@ var archive = require('../helpers/archive-helpers');
 exports.handleRequest = function (req, res) {
 
   if (req.method === 'GET') {
+
     if ( req.url === '/') {
       res.end('/<input type="input" name="url">/');
 
