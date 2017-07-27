@@ -1,6 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var _ = require('underscore');
+var download = require('download');
 
 /*
  * You will need to reuse the same paths many times over in the course of
@@ -63,7 +64,7 @@ exports.downloadUrls = function(urls, callback) {
 };
 
 exports.downloadUrl = function(url) {
-  //var file = fs.
+  download(url, exports.urlArchivePath(url));
 };
 
 exports.readArchivedFile = function(url, callback) {
