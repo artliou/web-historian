@@ -1,14 +1,23 @@
 var path = require('path');
 var archive = require('../helpers/archive-helpers');
 // require more modules/folders here!
-
+var fs = require('fs');
 
 exports.handleRequest = function (req, res) {
 
   if (req.method === 'GET') {
 
     if ( req.url === '/') {
-      res.end('/<input type="input" name="url">/');
+      fs.readFile('./web/public/index.html', 'utf-8', (err, data) => {
+
+        if (err) {
+          throw err;
+        } else {
+          statusCode = 200;
+          res.writeHead(res.statusCode, archive.headers);
+          res.end(data);
+        }
+      });
 
     } else {
       var cb = function (isInArchive) {
