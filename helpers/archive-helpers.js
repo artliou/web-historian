@@ -64,7 +64,9 @@ exports.downloadUrls = function(urls, callback) {
 };
 
 exports.downloadUrl = function(url) {
-  download(url, exports.urlArchivePath(url));
+  download(url, exports.urlArchivePath(url)).then( () => {
+    exports.paths.list.splice(exports.paths.list.indexOf(url), 1);
+  });
 };
 
 exports.readArchivedFile = function(url, callback) {
