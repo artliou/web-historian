@@ -4,7 +4,7 @@ var archive = require('../helpers/archive-helpers');
 var fs = require('fs');
 
 exports.handleRequest = function (req, res) {
-
+  //console.log(req);
   if (req.method === 'GET') {
 
     if ( req.url === '/') {
@@ -48,11 +48,29 @@ exports.handleRequest = function (req, res) {
       archive.addUrlToList(req.url, () => {
         res.statusCode = 302;
         res.writeHead(res.statusCode, archive.headers);
-        res.end();
+        archive.isUrlArchived(req.url, (exists) => { 
+          if (exists) {
+            archive.readArchivedFile(req.url, (data) => {
+              res.end(data);
+            });
+          } else {
+
+            fs.readFile('./web/public/loading.html', 'utf-8', (err, data) => {
+              if (err) {
+                throw err;
+              } else {
+                statusCode = 404;
+                res.writeHead(res.statusCode, archive.headers);
+                res.end(data);
+              }
+            });
+          }
+        });
       });
     });
 
-  } else {
-    res.end(archive.paths.list);
+  // } else {
+  //   res.end(archive.paths.list);
+  // }
   }
 };
