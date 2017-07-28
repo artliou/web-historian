@@ -42,7 +42,6 @@ exports.handleRequest = function (req, res) {
 
   } else if (req.method === 'POST') {
     //var url = req.url.replace('/?', '');
-    let tempUrl;
     let body = '';
     req.on('data', (chunk) => { req.url = chunk.toString().split('=')[1]; } );
     req.on('end', () => {
